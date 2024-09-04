@@ -7,10 +7,10 @@ resources:
       connection: CDWebHook_Connection
 
 steps: 
-
-  - task: NodeTaskRunnerInstaller@0
+  - task: NodeTool@0
     inputs:
-      nodeVersion: '16'
+      versionSource: 'spec'
+      versionSpec: '16.x'
       
   - task: Npm@1
     inputs:
