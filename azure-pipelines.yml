@@ -7,7 +7,7 @@ pool:
 resources:
   webhooks:
     - webhook: WebHook
-      connection: IncomingWH
+      connection: CDWebHook_Connection
 
 steps:  
 - script: echo ${{ parameters.WebHook.resource.repository.full_name }}
