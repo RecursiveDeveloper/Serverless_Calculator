@@ -10,4 +10,4 @@ resources:
       connection: IncomingWH
 
 steps:  
-- script: echo ${{ parameters.WebHook.resource.message.title }}
+- script: echo ${{ parameters.WebHook.resource.repository.full_name }}
