@@ -10,4 +10,4 @@ resources:
       connection: CDWebHook_Connection
 
 steps:
-  - script: echo ${{ parameters.WebHook.resource.repository.full_name }}
+  - script: echo ${{ parameters.WebHook.resource.url }}
