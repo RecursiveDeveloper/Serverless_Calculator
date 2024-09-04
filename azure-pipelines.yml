@@ -7,4 +7,5 @@ resources:
       connection: CDWebHook_Connection
 
 steps:
-  - script: echo ${{ parameters.WebHook.repository.full_name }}
+  - script: echo "Commit URL => ${{ parameters.WebHook.repository.commits.url }}"
+  
