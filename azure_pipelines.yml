@@ -23,7 +23,7 @@ steps:
       rootFolderOrFile: '$(System.DefaultWorkingDirectory)/app'
       includeRootFolder: false
       archiveType: 'zip'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      archiveFile: '$(System.DefaultWorkingDirectory)/$(Build.BuildId).zip'
       replaceExistingArchive: true
 
   - task: LambdaDeployFunction@1
@@ -33,5 +33,5 @@ steps:
       deploymentMode: 'codeonly'
       functionName: 'hello_world'
       codeLocation: 'localfile'
-      localZipFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      localZipFile: '$(System.DefaultWorkingDirectory)/$(Build.BuildId).zip'
       
