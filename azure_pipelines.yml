@@ -1,5 +1,5 @@
 pool: 
-  name: Default
+  vmImage: ubuntu-latest
 
 resources:
   webhooks:
