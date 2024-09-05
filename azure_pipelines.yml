@@ -10,7 +10,7 @@ steps:
   - task: NodeTool@0
     inputs:
       versionSource: 'spec'
-      versionSpec: '20.x'
+      versionSpec: '12.x'
       
   - task: Npm@1
     inputs:
