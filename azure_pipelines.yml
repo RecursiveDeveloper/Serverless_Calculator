@@ -1,3 +1,6 @@
+trigger: none
+pr: none
+
 pool: 
   vmImage: ubuntu-latest
 
@@ -5,6 +8,10 @@ resources:
   webhooks:
     - webhook: WebHook
       connection: CDWebHook_Connection
+      trigger:
+        branches:
+        - main
+        - azure-pipelines
 
 steps: 
   - task: NodeTool@0
