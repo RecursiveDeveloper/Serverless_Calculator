@@ -10,12 +10,13 @@ steps:
   - task: NodeTool@0
     inputs:
       versionSource: 'spec'
-      versionSpec: '16.x'
+      versionSpec: '20.x'
       
   - task: Npm@1
     inputs:
-      command: 'install'
+      command: 'custom'
       workingDir: '$(System.DefaultWorkingDirectory)/app'
+      customCommand: 'install'
 
   - task: ArchiveFiles@2
     inputs:
