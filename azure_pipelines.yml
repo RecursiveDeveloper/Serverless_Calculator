@@ -28,8 +28,6 @@ stages:
               command: 'custom'
               workingDir: '$(System.DefaultWorkingDirectory)/app'
               customCommand: 'install'
-          - script: ls -la $(System.DefaultWorkingDirectory)
-          - script: ls -la $(System.DefaultWorkingDirectory)/app
           - task: trivy@1
             inputs:
               version: 'latest'
