@@ -31,7 +31,7 @@ stages:
           - task: trivy@1
             inputs:
               version: 'latest'
-              path: '.'
+              path: '$(System.DefaultWorkingDirectory)/app'
               exitCode: '0'
           - task: ArchiveFiles@2
             inputs:
@@ -49,7 +49,9 @@ stages:
   - stage: Deploy
     dependsOn: Build
     jobs:
-      - job: DownloadArtifact
+      - job: DeployArtifact
+        dependsOn: DownloadArtifact
+        condition: succeeded()
         steps:
           - task: DownloadBuildArtifacts@0
             inputs:
@@ -57,10 +59,6 @@ stages:
               downloadType: 'single'
               artifactName: '$(Build.BuildId).zip'
               targetPath: '$(Build.ArtifactStagingDirectory)'
-      - job: DeployArtifact
-        dependsOn: DownloadArtifact
-        condition: succeeded()
-        steps:
           - task: LambdaDeployFunction@1
             inputs:
               awsCredentials: 'AWS_Connection'
