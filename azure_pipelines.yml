@@ -58,7 +58,7 @@ stages:
               buildType: 'current'
               downloadType: 'single'
               artifactName: '$(Build.BuildId).zip'
-              targetPath: '$(Build.ArtifactStagingDirectory)'
+              targetPath: '$(System.ArtifactsDirectory)'
           - task: LambdaDeployFunction@1
             inputs:
               awsCredentials: 'AWS_Connection'
@@ -66,4 +66,4 @@ stages:
               deploymentMode: 'codeonly'
               functionName: 'hello_world'
               codeLocation: 'localfile'
-              localZipFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+              localZipFile: '$(System.ArtifactsDirectory)/$(Build.BuildId).zip'
