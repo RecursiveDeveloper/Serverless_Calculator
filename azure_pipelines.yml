@@ -38,7 +38,7 @@ stages:
           - task: trivy@1
             inputs:
               version: 'latest'
-              path: '$(System.DefaultWorkingDirectory)'
+              path: '.'
               exitCode: '0'
 
   - stage: Deploy
