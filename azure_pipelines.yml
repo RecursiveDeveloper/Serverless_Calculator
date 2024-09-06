@@ -47,7 +47,7 @@ stages:
               publishLocation: 'Container'
 
   - stage: Deploy
-    dependsOn: Scanning
+    dependsOn: Build
     jobs:
       - job: DownloadArtifact
         steps:
