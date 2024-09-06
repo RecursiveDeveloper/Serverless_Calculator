@@ -42,23 +42,19 @@ stages:
               archiveType: 'zip'
               archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
               replaceExistingArchive: true
-          - task: PublishBuildArtifacts@1
+          - task: PublishPipelineArtifact@1
             inputs:
-              PathToPublish: '$(Build.ArtifactStagingDirectory)'
-              ArtifactName: '$(Build.BuildId).zip'
-              publishLocation: 'Container'
+              targetPath: '$(Build.ArtifactStagingDirectory)'
+              artifactName: '$(Build.BuildId).zip'
           
   - stage: Deploy
     dependsOn: Build
     jobs:
       - job: DeployArtifact
         steps:
-          - task: DownloadBuildArtifacts@0
+          - task: DownloadPipelineArtifact@2
             inputs:
-              buildType: 'current'
-              downloadType: 'single'
-              artifactName: '$(Build.BuildId).zip'
-              targetPath: '$(System.ArtifactsDirectory)'
+              artifact: '$(Build.BuildId).zip'
           - task: LambdaDeployFunction@1
             inputs:
               awsCredentials: 'AWS_Connection'
@@ -66,4 +62,4 @@ stages:
               deploymentMode: 'codeonly'
               functionName: 'hello_world'
               codeLocation: 'localfile'
-              localZipFile: '$(System.ArtifactsDirectory)/$(Build.BuildId).zip'
+              localZipFile: '$(Pipeline.Workspace)/$(Build.BuildId).zip'
