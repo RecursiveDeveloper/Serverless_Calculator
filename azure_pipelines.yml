@@ -33,7 +33,7 @@ stages:
           - task: trivy@1
             inputs:
               version: 'latest'
-              path: '$(System.DefaultWorkingDirectory)/app'
+              path: './app'
               exitCode: '0'
           - task: ArchiveFiles@2
             inputs:
