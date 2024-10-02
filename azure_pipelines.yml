@@ -33,6 +33,14 @@ stages:
               version: 'latest'
               path: './app'
               exitCode: '0'
+          - task: dependency-check-build-task@6
+            inputs:
+              projectName: 'Serverless_Calculator'
+              scanPath: '$(System.DefaultWorkingDirectory)/app'
+              format: 'HTML'
+              uploadReports: true
+              failOnCVSS: '1'
+              enableVerbose: true
           - task: ArchiveFiles@2
             inputs:
               rootFolderOrFile: '$(System.DefaultWorkingDirectory)/app'
