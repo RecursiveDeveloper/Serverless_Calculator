@@ -30,23 +30,15 @@ stages:
               command: 'custom'
               workingDir: '$(System.DefaultWorkingDirectory)/app'
               customCommand: 'install'
-
-          - script: |
-              echo Installing OWASP Dependency Check...
-              wget https://github.com/jeremylong/DependencyCheck/releases/download/v10.0.4/dependency-check-10.0.4-release.zip
-              unzip dependency-check-10.0.4-release.zip
-            displayName: 'Install OWASP Dependency Check'
-
-          - script: |
-              echo Running OWASP Dependency Check...
-              ./dependency-check/bin/dependency-check.sh --project "Serverless_Calculator" --scan "$(System.DefaultWorkingDirectory)/app" --out "$(Build.ArtifactStagingDirectory)/dependency-check-report"
-            displayName: 'Run OWASP Dependency Check'
-
-          - task: PublishPipelineArtifact@1
+          - task: dependency-check-build-task@6
+            displayName: 'Dependency check analysis'
             inputs:
-              targetPath: '$(Build.ArtifactStagingDirectory)/dependency-check-report'
-              artifact: 'OWASPDependencyCheckReport' 
-
+              projectName: 'Serverless_Calculator'
+              scanPath: '$(System.DefaultWorkingDirectory)/app'
+              format: 'HTML'
+              uploadReports: true
+              failOnCVSS: '1'
+              enableVerbose: true
           - task: ArchiveFiles@2
             displayName: 'Artifact archiving'
             inputs:
