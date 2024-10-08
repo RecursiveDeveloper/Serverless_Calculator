@@ -1,5 +1,12 @@
 jobs:
-    - template: pre_build.yml
+    - job: Prerequisites
+      displayName: 'Prerequisites'
+      steps:
+      - task: NodeTool@0
+        displayName: 'Node.js installation'
+        inputs:
+          versionSource: 'spec'
+          versionSpec: '20.x'
     - job: BuildArtifact
       displayName: 'Build Artifact'
       dependsOn: Prerequisites
