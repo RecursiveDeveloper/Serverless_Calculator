@@ -30,15 +30,23 @@ stages:
               command: 'custom'
               workingDir: '$(System.DefaultWorkingDirectory)/app'
               customCommand: 'install'
-          - task: dependency-check-build-task@6
-            displayName: 'Dependency check analysis'
+          # - task: dependency-check-build-task@6
+          #   displayName: 'Dependency check analysis'
+          #   inputs:
+          #     projectName: 'Serverless_Calculator'
+          #     scanPath: '$(System.DefaultWorkingDirectory)/app'
+          #     format: 'HTML'
+          #     uploadReports: true
+          #     failOnCVSS: '1'
+          #     enableVerbose: true
+          - task: SnykSecurityScan@1
             inputs:
+              serviceConnectionEndpoint: 'Snyk_Scanner'
+              testType: 'app'
+              monitorWhen: 'always'
+              failOnIssues: true
               projectName: 'Serverless_Calculator'
-              scanPath: '$(System.DefaultWorkingDirectory)/app'
-              format: 'HTML'
-              uploadReports: true
-              failOnCVSS: '1'
-              enableVerbose: true
+              organization: 'eaf4460f-979a-493e-82ea-37b49348c6c5'
           - task: ArchiveFiles@2
             displayName: 'Artifact archiving'
             inputs:
