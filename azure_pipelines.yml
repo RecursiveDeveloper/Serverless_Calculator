@@ -39,6 +39,9 @@ stages:
           #     uploadReports: true
           #     failOnCVSS: '1'
           #     enableVerbose: true
+          - script: |
+              pwd
+              ls $(System.DefaultWorkingDirectory)/app
           - task: SnykSecurityScan@1
             inputs:
               serviceConnectionEndpoint: 'Snyk_Scanner'
