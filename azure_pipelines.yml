@@ -43,6 +43,7 @@ stages:
             inputs:
               serviceConnectionEndpoint: 'Snyk_Scanner'
               testType: 'app'
+              targetFile: '$(System.DefaultWorkingDirectory)/app'
               monitorWhen: 'always'
               failOnIssues: true
           - task: ArchiveFiles@2
