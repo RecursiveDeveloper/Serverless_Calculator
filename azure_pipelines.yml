@@ -45,8 +45,6 @@ stages:
               testType: 'app'
               monitorWhen: 'always'
               failOnIssues: true
-              projectName: 'Serverless_Calculator'
-              organization: 'eaf4460f-979a-493e-82ea-37b49348c6c5'
           - task: ArchiveFiles@2
             displayName: 'Artifact archiving'
             inputs:
