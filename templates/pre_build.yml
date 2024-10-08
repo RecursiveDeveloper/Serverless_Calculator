@@ -1,0 +1,10 @@
+jobs:
+    - job: Prerequisites
+    displayName: 'Prerequisites'
+    steps:
+        - task: NodeTool@0
+        displayName: 'Node.js installation'
+        inputs:
+            versionSource: 'spec'
+            versionSpec: '20.x'
+            

@@ -1,0 +1,16 @@
+jobs:
+    - job: DeployArtifact
+    steps:
+        - task: DownloadPipelineArtifact@2
+        displayName: 'Artifact download'
+        inputs:
+            artifact: '$(Build.BuildId).zip'
+        - task: LambdaDeployFunction@1
+        displayName: 'Lambda function deploy'
+        inputs:
+            awsCredentials: 'AWS_Connection'
+            regionName: 'us-east-1'
+            deploymentMode: 'codeonly'
+            functionName: 'hello_world'
+            codeLocation: 'localfile'
+            localZipFile: '$(Pipeline.Workspace)/$(Build.BuildId).zip'

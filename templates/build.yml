@@ -1,0 +1,21 @@
+jobs:
+    - template: pre_build.yml
+    - job: BuildArtifact
+    displayName: 'Build Artifact'
+    dependsOn: Prerequisites
+    condition: succeeded()
+    steps:
+        - template: sca_scanner.yml
+        - task: ArchiveFiles@2
+        displayName: 'Artifact archiving'
+        inputs:
+            rootFolderOrFile: '$(System.DefaultWorkingDirectory)/app'
+            includeRootFolder: false
+            archiveType: 'zip'
+            archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+            replaceExistingArchive: true
+        - task: PublishPipelineArtifact@1
+        displayName: 'Artifact publishing'
+        inputs:
+            targetPath: '$(Build.ArtifactStagingDirectory)'
+            artifactName: '$(Build.BuildId).zip'

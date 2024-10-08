@@ -1,0 +1,9 @@
+steps:
+    - task: SnykSecurityScan@1
+    inputs:
+        serviceConnectionEndpoint: 'Snyk_Scanner'
+        testType: 'app'
+        targetFile: '$(System.DefaultWorkingDirectory)/app/package.json'
+        monitorWhen: 'always'
+        failOnIssues: true
+        

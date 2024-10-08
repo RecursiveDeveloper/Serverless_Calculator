@@ -2,7 +2,11 @@ trigger:
   branches:
     include:
       - 'main'
-      - 'azure-pipelines'
+  paths:
+    exclude:
+      - 'README.md'
+      - 'azure_pipelines.yml'
+      - 'templates/*'
 pr: none
 
 pool: 
@@ -11,70 +15,9 @@ pool:
 stages:
   - stage: Build
     jobs:
-      - job: Prerequisites
-        displayName: 'Prerequisites'
-        steps:
-          - task: NodeTool@0
-            displayName: 'Node.js installation'
-            inputs:
-              versionSource: 'spec'
-              versionSpec: '20.x'
-      - job: BuildArtifact
-        displayName: 'Build Artifact'
-        dependsOn: Prerequisites
-        condition: succeeded()
-        steps:
-          - task: Npm@1
-            displayName: 'Dependencies installation'
-            inputs:
-              command: 'custom'
-              workingDir: '$(System.DefaultWorkingDirectory)/app'
-              customCommand: 'install'
-          # - task: dependency-check-build-task@6
-          #   displayName: 'Dependency check analysis'
-          #   inputs:
-          #     projectName: 'Serverless_Calculator'
-          #     scanPath: '$(System.DefaultWorkingDirectory)/app'
-          #     format: 'HTML'
-          #     uploadReports: true
-          #     failOnCVSS: '1'
-          #     enableVerbose: true
-          - task: SnykSecurityScan@1
-            inputs:
-              serviceConnectionEndpoint: 'Snyk_Scanner'
-              testType: 'app'
-              targetFile: '$(System.DefaultWorkingDirectory)/app/package.json'
-              monitorWhen: 'always'
-              failOnIssues: true
-          - task: ArchiveFiles@2
-            displayName: 'Artifact archiving'
-            inputs:
-              rootFolderOrFile: '$(System.DefaultWorkingDirectory)/app'
-              includeRootFolder: false
-              archiveType: 'zip'
-              archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-              replaceExistingArchive: true
-          - task: PublishPipelineArtifact@1
-            displayName: 'Artifact publishing'
-            inputs:
-              targetPath: '$(Build.ArtifactStagingDirectory)'
-              artifactName: '$(Build.BuildId).zip'
+      - template: templates/build.yml
           
   - stage: Deploy
     dependsOn: Build
     jobs:
-      - job: DeployArtifact
-        steps:
-          - task: DownloadPipelineArtifact@2
-            displayName: 'Artifact download'
-            inputs:
-              artifact: '$(Build.BuildId).zip'
-          - task: LambdaDeployFunction@1
-            displayName: 'Lambda function deploy'
-            inputs:
-              awsCredentials: 'AWS_Connection'
-              regionName: 'us-east-1'
-              deploymentMode: 'codeonly'
-              functionName: 'hello_world'
-              codeLocation: 'localfile'
-              localZipFile: '$(Pipeline.Workspace)/$(Build.BuildId).zip'
+      - template: templates/deploy.yml
