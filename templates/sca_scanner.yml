@@ -1,5 +1,5 @@
 steps:
-    - task: SnykSecurityScan@1
+  - task: SnykSecurityScan@1
     inputs:
         serviceConnectionEndpoint: 'Snyk_Scanner'
         testType: 'app'
