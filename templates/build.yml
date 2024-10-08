@@ -12,6 +12,12 @@ jobs:
       dependsOn: Prerequisites
       condition: succeeded()
       steps:
+        - task: Npm@1
+          displayName: 'Dependencies installation'
+          inputs:
+            command: 'custom'
+            workingDir: '$(System.DefaultWorkingDirectory)/app'
+            customCommand: 'install'
         - template: sca_scanner.yml
         - task: ArchiveFiles@2
           displayName: 'Artifact archiving'
