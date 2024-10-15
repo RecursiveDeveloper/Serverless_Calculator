@@ -1,7 +1,6 @@
 jobs:
     - job: BuildArtifact
       displayName: 'Build Artifact'
-      dependsOn: Prerequisites
       condition: succeeded()
       steps:
         - task: Npm@1
