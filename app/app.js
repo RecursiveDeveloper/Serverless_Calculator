@@ -37,7 +37,7 @@ app.post("/", function (req, res) {
       <h2>
      That was easy, your result is: ${calculator(num1, num2, operator)}
     </h2>
-    <img src="https://image-repo-buraku.s3.eu-west-1.amazonaws.com/Lambda.png" alt="Lambda-Icon"class="center" width="10%" style="vertical-align:middle;margin:0px 100px">
+    <img src="https://i.ytimg.com/vi/qlkr0h9JQ6U/maxresdefault.jpg" alt="Lambda-Icon"class="center" width="10%" style="vertical-align:middle;margin:0px 100px">
       <p>
     There's no need for compliments </p>
     <p>I already know i'm the smartest app in the world hahaha ;)</p>
