@@ -1,3 +1,7 @@
+parameters:
+  - name: Lambda_Function_Name
+    type: string
+
 jobs:
   - job: DeployArtifact
     steps:
@@ -11,6 +15,7 @@ jobs:
           awsCredentials: 'AWS_Connection'
           regionName: 'us-east-1'
           deploymentMode: 'codeonly'
-          functionName: 'hello_world'
+          functionName: ${{ parameters.Lambda_Function_Name }}
           codeLocation: 'localfile'
           localZipFile: '$(Pipeline.Workspace)/$(Build.BuildId).zip'
+          
